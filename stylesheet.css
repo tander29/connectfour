@@ -82,7 +82,7 @@ from {top: -100%;}
 to {top: 0;}
 
 }
-
+/* 
 .left {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
@@ -99,4 +99,4 @@ to {top: 0;}
     filter: FlipH;
     -ms-filter: "FlipH";
 }
-#bee {transition: transform .1s}
+#bee {transition: transform .1s} */
