@@ -36,13 +36,28 @@ h3 {
     flex-direction: column-reverse;
     align-items: center;
     animation: drop 1s ease-out;
+    opacity: .8;
 }
-#displayTurn{
+.column:hover {
+    background-color: rgba(49, 240, 240, 0.11)
     
+   
+}
+
+.displayRed{
+    z-index: 1;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
-    
+    border-radius: 50%; 
+    background-color: red ;
+    opacity:1;
+}
+.displayBlack{
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; 
+    background-color: black;
 }
 .redDisc{
     position: relative;
@@ -76,12 +91,31 @@ h3 {
     text-decoration: underline;
 }
 
+#winnerDisc{
+    position: relative;
+    animation: drop .75s ease-out;
+}
+
 @keyframes drop {
 
 from {top: -100%;}
 to {top: 0;}
 
 }
+
+.drop {
+   
+      width:1px;
+      height:89px;
+      position: absolute;
+      bottom:200px;
+      animation: fall .63s linear infinite;
+   
+    
+  }
+  
+  /* animate the drops*/
+ 
 /* 
 .left {
     -moz-transform: scaleX(-1);

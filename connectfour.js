@@ -1,10 +1,11 @@
 let turn = "red"
 let winner = ""
 let gameover = ""
+let newDisc = ""
 const displayTurn = document.getElementById("displayTurn")
 const columns = document.getElementsByClassName("column");
 let wrapper = document.getElementsByClassName("wrapper");
-
+displayTurn.className = "displayRed";
 let board = [
     ["", 0, 0, 0, 0, 0],
     ["", 0, 0, 0, 0, 0],
@@ -17,34 +18,31 @@ let board = [
 ]
 
 for (let column of columns) {
-    column.addEventListener('click', dropDisc)
+    column.addEventListener('click', dropDisc);
 
 
 }
 function dropDisc(event) {
     let clickedColumn = event.currentTarget;
-    // if (clickedColumn.id === "disc") {
-    //     alert("Can't add a checker to a checker silly, click above on the column");
-
-    // } else {
-        let arrayNumber = parseInt(clickedColumn.id)
-        console.log(arrayNumber)
+   
+        let arrayNumber = parseInt(clickedColumn.id);
+        console.log(arrayNumber);
         
         if (clickedColumn.childElementCount >= 6) {
-            alert("There are already 6 in this column!")
+            alert("There are already 6 in this column!");
         } else {
-            let newDisc = document.createElement("div");
-            newDisc.className = "disc"
+            newDisc = document.createElement("div");
+            newDisc.className = "disc";
             if (turn === "red") {
-                redDisc = newDisc.className = "redDisc"
-                displayTurn.className = "blackDisc"
-                turn = "black"
-                winner = "Red"
+                redDisc = newDisc.className = "redDisc";
+                displayTurn.className = "displayBlack";
+                turn = "black";
+                winner = "Red";
             } else {
-                blackDisc = newDisc.className = "blackDisc"
-                displayTurn.className = "redDisc"
-                turn = "red"
-                winner = "Black"
+                blackDisc = newDisc.className = "blackDisc";
+                displayTurn.className = "displayRed";
+                turn = "red";
+                winner = "black";
             }
             clickedColumn.appendChild(newDisc);
         }
@@ -57,12 +55,12 @@ function dropDisc(event) {
 
         if (turn == "red") {
             //the below are opposite B and R due to when  above the turn is redefined
-            board[arrayNumber][clickedColumn.childElementCount - 1] = "B"
+            board[arrayNumber][clickedColumn.childElementCount - 1] = "B";
         } else {
-            board[arrayNumber][clickedColumn.childElementCount - 1] = "R"
+            board[arrayNumber][clickedColumn.childElementCount - 1] = "R";
         }
-        console.log(board[arrayNumber])
-        console.log(board)
+        console.log(board[arrayNumber]);
+        console.log(board);
 
 
 
@@ -77,9 +75,10 @@ function dropDisc(event) {
                     if (cell === board[columnIndex][rowIndex + 1] &&
                         cell === board[columnIndex][rowIndex + 2] &&
                         cell === board[columnIndex][rowIndex + 3]) {
-                        document.getElementById("winner").textContent = (winner + "'s a winner up. Click here to Reset");
-                        gameover = winner
-                        
+                        document.getElementById("winner").textContent = (winner + "'s a winner up. Keep playing or click here to Reset");
+                        gameover = winner;
+                        // newDisc.classList.add("winnerDisc")
+                        // document.body.appendChild(newDisc)
                     }
                 }
 
@@ -93,7 +92,7 @@ function dropDisc(event) {
                     if (cell === board[columnIndex + 1][rowIndex] &&
                         cell === board[columnIndex + 2][rowIndex] &&
                         cell === board[columnIndex + 3][rowIndex]) {
-                        document.getElementById("winner").textContent = (winner + "'s a winner across. Click here to Reset")
+                        document.getElementById("winner").textContent = (winner + "'s a winner across. Keep playing or click here to Reset")
                         gameover = winner
                     }
                 }
@@ -108,7 +107,7 @@ function dropDisc(event) {
                     if (cell === board[columnIndex + 1][rowIndex + 1] &&
                         cell === board[columnIndex + 2][rowIndex + 2] &&
                         cell === board[columnIndex + 3][rowIndex + 3]) {
-                        document.getElementById("winner").textContent = (winner + "'s a upright Diagonal. Click here to Reset")
+                        document.getElementById("winner").textContent = (winner + "'s a upright Diagonal. Keep playing or click here to Reset")
                         gameover = winner
                     }
                 }
@@ -123,7 +122,7 @@ function dropDisc(event) {
                     if (cell === board[columnIndex - 1][rowIndex + 1] &&
                         cell === board[columnIndex - 2][rowIndex + 2] &&
                         cell === board[columnIndex - 3][rowIndex + 3]) {
-                        document.getElementById("winner").textContent = (winner + "'s down left Diagonal. Click here to Reset");
+                        document.getElementById("winner").textContent = (winner + "'s down left Diagonal. Keep playing or click here to Reset");
                         gameover = winner
                     }
                 }
@@ -139,8 +138,8 @@ function dropDisc(event) {
         document.getElementById("winner").innerHTML = "Click Here to Reset"
         for(let i=0;i< 7 ;i++){
             let resetColumn =  document.getElementById(i);
-            resetColumn.innerHTML = ""
-            gameover = ""
+            resetColumn.innerHTML = "";
+            gameover = "";
          
         
          }
@@ -156,19 +155,29 @@ function dropDisc(event) {
         
         ]
     }
+
     
 //     //astro boy animation below
 //     var bee = document.getElementById("bee");
 //     document.addEventListener("mousemove", getMouse); 
+        let mouseHover = document.getElementById("displayTurn");
+        document.addEventListener("mousemove", getMouse)
 
+        mouseHover.style.position = "absolute";
+//     bee.style.position = "absolute"; //css	
+        let mousePos = {x:0, y:0};
 
-//     bee.style.position = "absolute"; //css		
 //     var beepos = {x:0, y:0};
-
+        setInterval(followMouse, 20);
 //     setInterval(followMouse, 50);
-    
+        let mouse = {x:0, y:0};
+
 //     var mouse = {x:0, y:0}; //mouse.x, mouse.y
-    
+
+function getMouse(e){
+    mouse.x = e.pageX;
+    mouse.y = e.pageY;
+}
 //     var dir = "right";
 //     function getMouse(e){
 //         mouse.x = e.pageX;
@@ -181,27 +190,53 @@ function dropDisc(event) {
 //     }
 //     }
     
-//     function followMouse(){
-//         //1. find distance X , distance Y
-//         var distX = mouse.x - beepos.x;
-//         var distY = mouse.y - beepos.y;
-//         //Easing motion
-//    //Progressive reduction of distance 
-//         beepos.x += distX/5;
-//         beepos.y += distY/2;
+        function followMouse(){
+            let distX = mouse.x - mousePos.x;
+            let distY = mouse.y - mousePos.y;
         
-//         bee.style.left = beepos.x + "px";
-//         bee.style.top = beepos.y + "px";
-  
-  
-//     //Apply css class 
-//     if (dir == "right"){
-//       bee.setAttribute("class", "right");
-//     } else {
-//       bee.setAttribute("class", "left");        
-//     }
+
+            mousePos.x += distX/5;
+            mousePos.y += distY/2;
+
         
-//     }
+            mouseHover.style.left = mousePos.x+110 + "px";
+            mouseHover.style.top = mousePos.y-40 + "px";
+
+        }
+  
+        
+
+
+let mouseJordan = document.getElementById("jordan");
+document.addEventListener("mousemove", getMouse1)
+
+mouseJordan.style.position = "absolute";
+	
+let mousePos1 = {x:0, y:0};
+
+
+setInterval(followMouse1, 20);
+
+let mouse1 = {x:0, y:0};
+
+
+
+function getMouse1(e1){
+mouse1.x = e1.pageX;
+mouse1.y = e1.pageY;
+}
+
+
+function followMouse1(){
+    let distX1 = mouse1.x - mousePos1.x;
+    let distY1 = mouse1.y - mousePos1.y;
+    mousePos1.x += distX1/5;
+    mousePos1.y += distY1/2;
+
+    mouseJordan.style.left = mousePos1.x+20 + "px";
+    mouseJordan.style.top = mousePos1.y-40 + "px";
+
+}
         
     
 
